@@ -9,7 +9,7 @@ import { Input, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import SimpleAlert from './Components/AlertComponent';
 import ControlledComponent from './Components/CalendarComponent';
-//import ClockModal from './Components/ClockModal';
+import ClockModal from './Components/ClockModal';
 
 function App() {
   const style = {
@@ -49,37 +49,10 @@ function App() {
     }) 
   }
 
-  function ClockModal() {
-  return (
-    <div>
-      <ControlledComponent />
-        <Modal
-            open={open}
-            onClose={handleClose}
-        >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Clock
-              </Typography>
-              <TextField placeholder='What did you do today?' value={notes} onChange={handleNotes} multiline/>
-              <br />
-              <Button onClick={() => {
-                handleTask(123);
-                handleClose();
-                console.log(notes);
-              }}>Save</Button>
-              <br />
-              <Button variant="contained" color={clock ? "success" : "error"} onClick={handleClock}> { clock ? "Clock In" : "Clock Out" }</Button>
-              <SimpleAlert text="Saved!"/>
-            </Box>
-        </Modal>
-    </div>
-  )}
-  
+  console.log(notes);
   return (
     <div className="App">
-      <GetData />
-      <ClockModal />
+      <ClockModal open={open} handleClose={handleClose} notes={notes} handleNotes={handleNotes} handleTask={handleTask} clock={clock}/>
       <Button onClick={handleOpen} variant='outlined'>Today</Button>
       <Button variant="contained">View</Button>
     </div>
