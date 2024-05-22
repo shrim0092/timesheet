@@ -65,7 +65,7 @@ function App() {
   console.log(notes);
   return (
     <div className="App">
-      <ClockModal open={open} handleClose={handleClose} notes={notes} handleNotes={optimizedHandleNotes} handleTask={handleTask} clock={clock}/>
+      <ClockModal open={open} handleClose={handleClose} notes={notes} handleNotes={handleNotes} handleTask={handleTask} clock={clock}/>
       <Button onClick={handleOpen} variant='outlined'>Today</Button>
       <Button variant="contained">View</Button>
     </div>
