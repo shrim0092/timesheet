@@ -37,6 +37,19 @@ function App() {
     setNotes(event.target.value);
    };
 
+  function debounce(func, timeout=1000)
+  {
+    let timer;
+    return function() {
+      clearTimeout(timer);
+      timer=setTimeout(()=>{
+
+      }, timeout);
+    }
+  }
+
+  const optimizedHandleNotes = debounce(handleNotes, 2000);
+
   function GetData() {
     fetch('data.json')
     .then((results) => {
