@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -24,6 +24,7 @@ function App() {
     p: 4,
   };
   
+  const [data, setData] = useState();
   const [open, setOpen] = useState(false);
   const [clock, setClockIn] = useState(true);
   const [task, setTask] = useState();
@@ -35,7 +36,7 @@ function App() {
   const handleTask = (prop) => setTask(prop.task);
   const handleNotes = event => {
     setNotes(event.target.value);
-   };
+  };
 
   function debounce(func, timeout=1000)
   {
@@ -48,8 +49,6 @@ function App() {
     }
   }
 
-  const optimizedHandleNotes = debounce(handleNotes, 2000);
-
   function GetData() {
     fetch('data.json')
     .then((results) => {
@@ -57,15 +56,19 @@ function App() {
     })
     .then((response) => {
       if(response?.results) {
-        console.log(response.results);
+        setData(response.results);
+        debounce(console.log({data}), 2000);
       }
     }) 
   }
 
+  //const optimizedGetData = debounce(GetData, 2000);
+
+  useEffect(GetData, []);
   console.log(notes);
   return (
     <div className="App">
-      <ClockModal open={open} handleClose={handleClose} notes={notes} handleNotes={handleNotes} handleTask={handleTask} clock={clock}/>
+      <ClockModal open={open} handleClose={handleClose} notes={notes} handleNotes={handleNotes} handleTask={handleTask} clock={clock} handleClock={handleClock}/>
       <Button onClick={handleOpen} variant='outlined'>Today</Button>
       <Button variant="contained">View</Button>
     </div>
