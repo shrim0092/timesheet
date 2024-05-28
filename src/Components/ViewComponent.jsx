@@ -21,6 +21,8 @@ export default function ViewComponent(props) {
         setIsData(true);
         //console.log({data});
       }
+      else
+        setIsData(false);
     }) 
   }
 
