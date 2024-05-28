@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -10,6 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import SimpleAlert from './Components/AlertComponent';
 import ControlledComponent from './Components/CalendarComponent';
 import ClockModal from './Components/ClockModal';
+import ViewComponent from './Components/ViewComponent';
 
 function App() {
   const style = {
@@ -24,12 +25,14 @@ function App() {
     p: 4,
   };
   
-  const [data, setData] = useState();
+  const [user, setUser] = useState("n1");
   const [open, setOpen] = useState(false);
   const [clock, setClockIn] = useState(true);
   const [task, setTask] = useState();
   const [notes, setNotes] = useState("");
   const [date_, setDate] = useState(Date);
+  const [view, setView] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleClock = () => setClockIn(!clock);
@@ -37,6 +40,7 @@ function App() {
   const handleNotes = event => {
     setNotes(event.target.value);
   };
+  const handleViewShow = () => setView(true);
 
   function debounce(func, timeout=1000)
   {
@@ -48,29 +52,18 @@ function App() {
       }, timeout);
     }
   }
-
-  function GetData() {
-    fetch('data.json')
-    .then((results) => {
-      return results.json();
-    })
-    .then((response) => {
-      if(response?.results) {
-        setData(response.results);
-        debounce(console.log({data}), 2000);
-      }
-    }) 
-  }
-
+  
   //const optimizedGetData = debounce(GetData, 2000);
 
-  useEffect(GetData, []);
-  console.log(notes);
+  //debounce(()=> {console.log(notes)}, 2000);
   return (
     <div className="App">
       <ClockModal open={open} handleClose={handleClose} notes={notes} handleNotes={handleNotes} handleTask={handleTask} clock={clock} handleClock={handleClock}/>
       <Button onClick={handleOpen} variant='outlined'>Today</Button>
-      <Button variant="contained">View</Button>
+      <Button variant="contained" onClick={handleViewShow}>View</Button>
+      {view &&
+        <ViewComponent name={user} date={date_}/>
+      }
     </div>
   );
 }
