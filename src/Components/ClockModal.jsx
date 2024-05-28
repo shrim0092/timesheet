@@ -6,7 +6,6 @@ import { TextField, Button } from '@mui/material';
 import SimpleAlert from './AlertComponent';
 
 
-
 const style = {
   position: 'absolute',
   top: '50%',

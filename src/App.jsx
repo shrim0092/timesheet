@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Alert from '@mui/material/Alert';
-import { Input, TextField } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import SimpleAlert from './Components/AlertComponent';
-import ControlledComponent from './Components/CalendarComponent';
 import ClockModal from './Components/ClockModal';
 import ViewComponent from './Components/ViewComponent';
 
@@ -30,7 +22,7 @@ function App() {
   const [clock, setClockIn] = useState(true);
   const [task, setTask] = useState();
   const [notes, setNotes] = useState("");
-  const [date_, setDate] = useState(Date);
+  const [date_, setDate] = useState(new Date().getMonth()+1 + "/" + new Date().getDate() + "/" + new Date().getFullYear());
   const [view, setView] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -54,7 +46,7 @@ function App() {
   }
   
   //const optimizedGetData = debounce(GetData, 2000);
-
+  //setDate("06/06/2024");
   //debounce(()=> {console.log(notes)}, 2000);
   return (
     <div className="App">
@@ -62,7 +54,7 @@ function App() {
       <Button onClick={handleOpen} variant='outlined'>Today</Button>
       <Button variant="contained" onClick={handleViewShow}>View</Button>
       {view &&
-        <ViewComponent name={user} date={date_}/>
+        <ViewComponent name={user} date="06/06/2024"/>
       }
     </div>
   );

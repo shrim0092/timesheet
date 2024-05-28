@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 
 export default function ViewComponent(props) {
   const [data, setData] = useState();
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState("asd");
   const [index, setIndex] = useState();
   const [isData, setIsData] = useState(false);
   useEffect(GetData, []);
-  useEffect(GetMessage, isData);
-  
+  useEffect(GetMessage, [isData]);
+
   function GetData() {
     fetch('data.json')
     .then((results) => {
@@ -20,19 +20,19 @@ export default function ViewComponent(props) {
         setData(response.results);
         setIsData(true);
         //console.log({data});
-        //GetMessage();
       }
     }) 
   }
 
   function GetMessage() {
-    if(data.length) {
+    console.log(data);
+    if(data) {
       data.map((val, idx, arr)=>{
-        if(data[idx].length && data[idx].name===props.name && data[idx].dates.length){
-          setIndex=idx;
-          console.log(val);
+        if(data[idx]){
+          setIndex(idx);
+          //console.log(val);
           data[idx].dates.map((v, i)=>{
-            if(v.date===props.date){
+            if(v.date==props.date){
               console.log(v);
               setMsg(v.msg);
             }
@@ -42,15 +42,18 @@ export default function ViewComponent(props) {
     }
   }
   
-  if(isData){
-    console.log(data);
-    GetMessage();
-  }
+
   return (
     <>
-      Name : {props.name}
-      Date : {props.date}
-      Message : {isData ? {msg} : "No Comments"}
+      <div>
+        Name : {props.name}
+        </div>
+      <div>
+        Date : {props.date}
+      </div>
+      <div>
+        Message : {isData ? msg : "No Comments"}
+      </div>
     </>
   )
 }
